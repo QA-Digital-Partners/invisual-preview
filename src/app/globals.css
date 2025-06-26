@@ -26,18 +26,24 @@ body {
 
 @keyframes diagonalMove {
   0% {
-    transform: translate(-100,0);
+    transform: translate(-200px,0);
   }
   50% {
-    transform: translate(-432px, 0px); /* Ajusta para que el ángulo simule 164° */
+    transform: translate(200px, 0px); /* Ajusta para que el ángulo simule 164° */
   }
+/*  50% {
+    transform: translate(-350px, 0px); /* Ajusta para que el ángulo simule 164° */
+/*  }
+  75% {
+    transform: translate(200px, 0);
+  }*/
   100% {
-    transform: translate(-100, 0);
+    transform: translate(0px, 0);
   }
 }
 
 .animate-diagonal {
-  animation: diagonalMove 2s ease-in-out infinite;
+  animation: diagonalMove 1.5s ease-in-out ;
 }
 
 .services {

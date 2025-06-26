@@ -1,4 +1,32 @@
+import { useEffect, useRef, useState } from 'react';
+
 export default function AnimatedLine({classes, children}) {
+
+ const ref = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target); // para que solo se dispare una vez
+        }
+      },
+      {
+        threshold: 0.2, // 20% visible
+      }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) observer.unobserve(ref.current);
+    };
+  }, []);
+
   return (
 <div className={`relative lg:w-[681px] h-[332px] overflow-hidden ${classes}`}>
   {/* Fondo negro */}
@@ -12,7 +40,7 @@ export default function AnimatedLine({classes, children}) {
     }}
   >
     {/* Capa animada que se moverá en la dirección del eje rotado */}
-    <div className="absolute lg:w-[1200px] w-full h-[60px] animate-diagonal"
+    <div ref={ref} className={`absolute lg:w-[1200px] w-full h-[60px] translate-x-[-200px] ${isVisible ? 'animate-diagonal' : ''}`}
         style={{
           background: 'radial-gradient(27.01% 35.67% at 52.65% 97.17%, #F00 0%, rgba(0,0,0,0) 100%);',
           backgroundBlendMode: 'screen',
